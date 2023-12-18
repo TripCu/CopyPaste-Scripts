@@ -59,5 +59,4 @@ button_stop.pack(pady=5)
 label_status = tk.Label(root, text="", bg='black', fg='white')
 label_status.pack()
 
-# Run the application
-root.mainloop()
+
