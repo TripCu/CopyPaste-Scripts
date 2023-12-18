@@ -34,16 +34,16 @@ def type_content():
                 if not typing_active:
                     break
 
-                # Randomly select a typing speed between 1 and 100 WPM
-                current_wpm = random.randint(1, 100)
+                # Randomly select a typing speed between 20 and 100 WPM
+                current_wpm = random.randint(20, 100)
                 interval = calculate_interval(current_wpm)
 
                 # Type the word
                 pyautogui.typewrite(word, interval=interval)
                 pyautogui.press("space")
 
-                # Randomly decide to delete and retype the word
-                if random.random() < 0.1:  # 10% chance to trigger
+                # Increase the chance to delete and retype the word (now 30% chance)
+                if random.random() < 0.3:  # 30% chance to trigger
                     # Delete the word
                     for _ in range(len(word) + 1):  # +1 for the space
                         pyautogui.press("backspace")
