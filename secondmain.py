@@ -3,19 +3,24 @@ from tkinter import scrolledtext
 import pyautogui
 import threading
 import time
+import random
 
 # Global flag to control the typing sequence
 typing_active = False
 
-# Calculate the interval for 40 WPM
-chars_per_minute = 40 * 5  # Average word is 5 characters
-chars_per_second = chars_per_minute / 60
-interval = 1 / chars_per_second  # Time between each character
+
+def calculate_interval(wpm):
+    # Calculate the interval for a given WPM
+    chars_per_minute = wpm * 5  # Average word is 5 characters
+    chars_per_second = chars_per_minute / 60
+    return 1 / chars_per_second  # Time between each character
+
 
 def save_to_file():
     with open("SaveData.txt", "w") as file:
         file.write(text_area.get("1.0", tk.END))
     label_status.config(text="Saved to SaveData.txt")
+
 
 def type_content():
     global typing_active
@@ -24,23 +29,44 @@ def type_content():
     time.sleep(5)  # Delay before typing starts
     with open("SaveData.txt", "r") as file:
         for line in file:
-            for char in line:
+            words = line.split()
+            for word in words:
                 if not typing_active:
                     break
-                pyautogui.typewrite(char, interval=interval)
+
+                # Randomly select a typing speed between 1 and 100 WPM
+                current_wpm = random.randint(1, 100)
+                interval = calculate_interval(current_wpm)
+
+                # Type the word
+                pyautogui.typewrite(word, interval=interval)
+                pyautogui.press("space")
+
+                # Randomly decide to delete and retype the word
+                if random.random() < 0.1:  # 10% chance to trigger
+                    # Delete the word
+                    for _ in range(len(word) + 1):  # +1 for the space
+                        pyautogui.press("backspace")
+                    # Retype the word
+                    pyautogui.typewrite(word, interval=interval)
+                    pyautogui.press("space")
+
             if not typing_active:
                 break
             pyautogui.press("enter")
     label_status.config(text="Stopped" if not typing_active else "Finished running")
     typing_active = False
 
+
 def run_typing_sequence():
     if not typing_active:
         threading.Thread(target=type_content).start()
 
+
 def stop_typing_sequence():
     global typing_active
     typing_active = False
+
 
 # Create the main window
 root = tk.Tk()
