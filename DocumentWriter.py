@@ -70,7 +70,7 @@ def stop_typing_sequence():
 
 # Create the main window
 root = tk.Tk()
-root.title("Copy Paster")
+root.title("Document Writer")
 root.config(bg='black')
 
 # Create a scrolled text area with black background and white text
