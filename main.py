@@ -5,14 +5,14 @@ import threading
 import time
 
 def save_to_file():
-    with open("shrek.txt", "w") as file:
+    with open("SaveData.txt", "w") as file:
         file.write(text_area.get("1.0", tk.END))
-    label_status.config(text="Saved to shrek.txt")
+    label_status.config(text="Saved to SaveData.txt")
 
 def type_content():
     label_status.config(text="Running...")
     time.sleep(5)  # Delay before typing starts
-    with open("shrek.txt", "r") as file:
+    with open("SaveData.txt", "r") as file:
         for word in file:
             pyautogui.typewrite(word)
             pyautogui.press("enter")
