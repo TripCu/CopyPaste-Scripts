@@ -1,4 +1,5 @@
-import tkinter as tk
+import tk
+inter as tk
 import subprocess
 from tkinter import font as tkFont  # Importing tkinter font module
 
