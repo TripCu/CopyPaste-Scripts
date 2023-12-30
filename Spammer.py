@@ -9,10 +9,9 @@ typing_active = False
 
 
 def save_to_file():
-    with open("SaveData.txt", "w") as file:
+    with open("SaveData.txt", "w", encoding="utf-8") as file:
         file.write(text_area.get("1.0", tk.END))
     label_status.config(text="Saved to SaveData.txt")
-
 
 def type_content():
     global typing_active
