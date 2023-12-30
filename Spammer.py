@@ -13,24 +13,25 @@ def save_to_file():
         file.write(text_area.get("1.0", tk.END))
     label_status.config(text="Saved to SaveData.txt")
 
+
 def type_content():
     global typing_active
     typing_active = True
     label_status.config(text="Running...")
     time.sleep(5)  # Delay before typing starts
-    with open("SaveData.txt", "r") as file:
-        for word in file:
+
+    with open("SaveData.txt", "r", encoding="utf-8") as file:  # Ensure encoding is specified for consistency
+        for line in file:
             if not typing_active:
                 break
-            pyautogui.typewrite(word)
-            pyautogui.press("enter")
+            pyautogui.typewrite(line)  # Type out the line
     label_status.config(text="Stopped" if not typing_active else "Finished running")
     typing_active = False
 
 
 def run_typing_sequence():
     if not typing_active:
-        threading.Thread(target=type_content).start()
+        threading.Thread(target=type_content, daemon=True).start()  # Make the thread a daemon so it closes with the app
 
 
 def stop_typing_sequence():
@@ -64,3 +65,4 @@ label_status = tk.Label(root, text="", bg='black', fg='white')
 label_status.pack()
 
 root.mainloop()
+
