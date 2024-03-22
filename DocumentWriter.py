@@ -73,8 +73,9 @@ root = tk.Tk()
 root.title("Document Writer")
 root.config(bg='black')
 
+rgb_color = (255, 0, 0)
 # Create a scrolled text area with black background and white text
-text_area = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=40, height=10, bg='black', fg='white')
+text_area = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=40, height=10, bg='black', fg='255, 0, 0')
 text_area.pack(padx=10, pady=10)
 
 # Create a Save button (yellow with black text)
